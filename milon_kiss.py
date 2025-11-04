@@ -1,10 +1,12 @@
 from typing import Dict
+from enum import Enum
 
 
-GET_WORD = "1"
-ADD_WORD = "2"
-DELETE_WORD = "3"
-EXIT = "4"
+class Options(Enum):
+    GET_WORD = "1"
+    ADD_WORD = "2"
+    DELETE_WORD = "3"
+    EXIT = "4"
 
 
 def display_menu(menu: Dict[str, str]) -> None:
@@ -43,26 +45,24 @@ def handle_delete_word(words_dict: Dict[str, str]) -> None:
 
 def main() -> None:
     main_menu = {
-        GET_WORD: "Get word",
-        ADD_WORD: "Add word",
-        DELETE_WORD: "Delete word",
-        EXIT: "Exit"
+        Options.GET_WORD.value: "Get word",
+        Options.ADD_WORD.value: "Add word",
+        Options.DELETE_WORD.value: "Delete word",
+        Options.EXIT.value: "Exit"
+    }
+    functions = {
+        Options.GET_WORD.value: handle_get_word,
+        Options.ADD_WORD.value: handle_add_word,
+        Options.DELETE_WORD.value: handle_delete_word
     }
     words_dict: Dict[str, str] = {}
     while True:
         display_menu(main_menu)
         choice = input("Enter choice: ")
 
-        if choice == GET_WORD:
-            handle_get_word(words_dict)
-
-        elif choice == ADD_WORD:
-            handle_add_word(words_dict)
-
-        elif choice == DELETE_WORD:
-            handle_delete_word(words_dict)
-
-        elif choice == EXIT:
+        if choice in (Options.GET_WORD.value, Options.ADD_WORD.value, Options.DELETE_WORD.value):
+            functions[choice](words_dict)
+        elif choice == Options.EXIT.value:
             print("Goodbye!")
             break
         else:
