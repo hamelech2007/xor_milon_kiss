@@ -60,7 +60,7 @@ def main() -> None:
         display_menu(main_menu)
         choice = input("Enter choice: ")
 
-        if choice in (Options.GET_WORD.value, Options.ADD_WORD.value, Options.DELETE_WORD.value):
+        if choice in [opt.value for opt in Options if opt != Options.EXIT]:
             functions[choice](words_dict)
         elif choice == Options.EXIT.value:
             print("Goodbye!")
